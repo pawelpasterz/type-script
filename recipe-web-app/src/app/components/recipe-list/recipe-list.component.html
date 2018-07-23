@@ -1,0 +1,19 @@
+<h1> These are our Recipes</h1>
+<div class="alert alert-info" *ngIf="!areRecipesLoaded && !loadError">
+  <h4 class="alert-heading">Loading recipes... Please wait a moment!</h4>
+  <div class="loader"></div>
+</div>
+<div *ngIf="areRecipesLoaded && (!recipes || !recipes.length)" class="alert alert-warning" role="alert">
+  <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+  <span class="sr-only">Info: </span>
+  No recipes downloaded. Maybe you did not add any?
+</div>
+<div *ngIf="loadError" class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error: </span>
+  {{ errorText }}
+</div>
+<div *ngFor="let recipe of recipes">
+  <app-recipe-summary [recipe]="recipe" (zoomIn)="zoomInOnRecipe($event)"></app-recipe-summary>
+</div>
+

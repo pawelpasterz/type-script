@@ -1,0 +1,57 @@
+<form [formGroup]="recipeForm">
+  <div class='cover-photo-holder'>
+    <input type="file" (change)="readUrl($event)">
+    <img [src]="coverPhotoForViewing" border="0"/>
+  </div>
+  <div class="newrecipe panel panel-default">
+    <div class="panel-heading">
+      <h4>Add New Recipe</h4>
+    </div>
+    <div class="panel-body">
+      <div class="form-group">
+        <input class="form-control" [(ngModel)]="recipeInProgress.title" type="text" placeholder="Recipe Title" formControlName="title" />
+      </div>
+      <div class="form-group">
+        <textarea rows="5" [(ngModel)]="recipeInProgress.description" class="form-control" placeholder="Description" formControlName="description"></textarea>
+      </div>
+      <div class="input-group">
+        <input type="number" class="form-control" [(ngModel)]="recipeInProgress.feeds_this_many" placeholder="Feeds this many" formControlName="feeds_this_many" />
+        <span class="input-group-addon">people</span>
+      </div>
+      <div class="input-group">
+        <input type="number" class="form-control" [(ngModel)]="recipeInProgress.preparation_time" placeholder="Preparation Time" formControlName="preparation_time" />
+        <span class="input-group-addon">minutes</span>
+      </div>
+
+      <!-- ingredients -->
+      <div class="form-group">
+        <label> Ingredients </label>
+        <div class="ingredient" *ngFor="let ingredient of recipeInProgress.ingredients; let i = index">
+          <input formControlName="ingredient_{{ i }}" type="text" class="form-control" [(ngModel)]="recipeInProgress.ingredients[i].ingredient" placeholder="Ingredient" />
+          <input formControlName="measure_{{ i }}" type="text" class="form-control" [(ngModel)]="recipeInProgress.ingredients[i].measure" placeholder="How Much?" />
+          <a (click)="removeIngredient(i)">Remove</a>
+        </div>
+        <div class="add-ingredient">
+          <input type="button" class="btn" value='Add' (click)="addIngredient()" />
+        </div>
+      </div>
+
+      <!-- instructions -->
+      <div class="form-group">
+        <label> Instructions </label>
+        <div class="instruction" *ngFor="let instruction of recipeInProgress.instructions; let i = index">
+          <input formControlName="instruction_{{ i }}" class="form-control" type="text" [(ngModel)]="recipeInProgress.instructions[i].instruction" placeholder="What to do?" />
+          <a (click)="removeInstruction(i)">Remove</a>
+          <input type="file" (change)="readInstructionUrl(i, $event)" />
+          <img [src]="instructionPhotosForViewing[i]" border="0" style="width: 100px; height: 100px; object-fit: scale-down" />
+        </div>
+        <div class="add-instruction">
+          <input type="button" class="btn" value='Add' (click)="addInstruction()" />
+        </div>
+      </div>
+      <div class="input-group">
+        <input type="button" class="btn" value="Add Recipe" [disabled]="!recipeForm.valid" (click)="addRecipe()" />
+      </div>
+    </div>
+  </div>
+</form>

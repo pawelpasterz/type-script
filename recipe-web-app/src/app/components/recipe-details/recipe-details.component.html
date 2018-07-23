@@ -1,0 +1,51 @@
+<div class="go-back-btn">
+  <input class="btn btn-primary" value="Go Back" type="button" (click)="goBack()"/>
+</div>
+<div class="alert alert-info" *ngIf="!areDetailsLoaded && !loadError">
+  <h4 class="alert-heading">Loading recipe details... Please wait a moment!</h4>
+  <div class="loader"></div>
+</div>
+<div *ngIf="loadError" class="alert alert-error" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error: </span>
+  {{ errorText }} - <a [routerLink]="['/recipes']">Back to recipe list</a>
+</div>
+<div *ngIf="areDetailsLoaded" id="recipe_main" class='recipe panel panel-default'>
+  <div class="panel-heading">
+    <h3 class="panel-title">{{ recipe.title | uppercase }}</h3>
+  </div>
+  <div class="panel-body">
+    <div id="recipe_cover" class='cover-photo-holder'>
+      <img
+        src="{{ recipe.cover_photo ? 'http://localhost:8080/images/' + recipe.cover_photo : '/assets/img/empty-bowl.jpg' }}"
+      />
+      <div>
+        {{ recipe.dateAdded | date: 'fullDate'}}
+      </div>
+    </div>
+    <p>{{ recipe.description | swearingFilter }}</p>
+    <div>
+      <div class="data-title">Preparation time</div>
+      <div>{{ recipe.preparation_time }}</div>
+      <div class="data-title">Feeds this many</div>
+      <div>{{ recipe.feeds_this_many }}</div>
+    </div>
+    <div id="ingredients">
+      <h4>Ingredients</h4>
+      <ul>
+        <li *ngFor="let ingredient of recipe.ingredients">
+          {{ ingredient.ingredient }} ({{ ingredient.measure }})
+        </li>
+      </ul>
+    </div>
+    <div id="instructions">
+      <h4>Instructions</h4>
+      <ol>
+        <li *ngFor="let instruction of recipe.instructions">
+          <p>{{ instruction.instruction }}</p>
+          <img src="{{ instruction.photo ? 'http://localhost:8080/images/' + instruction.photo : '' }}" border="0">
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
