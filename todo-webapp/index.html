@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TypeScript Todo List</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="container">
+    <div class="header clearfix">
+        <h1>TypeScript Todo List</h1>
+    </div>
+    <div class="row">
+        <div class="panel panel-default clearfix">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="todo-list col-md-12">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-10">
+                        <form class="add-todo">
+                            <div class="form-group">
+                                <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-primary input-lg">Add</button>
+                                        </span>
+                                    <input type="text" class="form-control input-lg"
+                                           placeholder="What do you need to get done?"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="clear-completed btn btn-sm btn-warning pull-right">Clear Completed</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.22/system.js"></script>
+<script type="text/javascript">
+    System.defaultJSExtensions = true;
+    System.import('ts/TodoApp').then(function (module) {
+        new module.TodoApp(document, [
+            'Pick up drycleaning',
+            'Buy Milk',
+            'Defeat Thanos'
+        ]);
+    })
+</script>
+</body>
+</html>
